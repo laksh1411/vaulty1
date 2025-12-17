@@ -1,0 +1,28 @@
+<!-- header.html -->
+<!-- Thymeleaf fragment for the site header -->
+<div th:fragment="siteHeader" class="site-header">
+    <div class="container nav">
+        <a class="brand" th:href="@{/}">
+            <img class="logo" th:src="@{/images/logo.png}" alt="logo"
+                style="width:36px;height:36px;border-radius:8px;" />
+            <span style="margin-left:8px;font-weight:600">Vaultly</span>
+        </a>
+
+        <button id="navToggle" class="btn small" aria-label="Open menu">☰</button>
+
+        <ul class="nav-links">
+            <li th:if="${!authenticated}"><a th:href="@{/}">Home</a></li>
+            <li th:if="${authenticated}"><a th:href="@{/app}">App</a></li>
+            <li th:if="${authenticated}"><a th:href="@{/profile}">Profile</a></li>
+            <li><a th:href="@{/about}">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button id="themeToggle" class="btn small" title="Toggle theme">🌙</button>
+            <a class="btn primary" th:if="${authenticated}" th:href="@{/app}">Open App</a>
+            <a class="btn" th:if="${authenticated}" href="#" onclick="logout(event)">Logout</a>
+            <a class="btn ghost" th:if="${!authenticated}" th:href="@{/login}">Sign in</a>
+            <a class="btn primary" th:if="${!authenticated}" th:href="@{/signup}">Create account</a>
+        </div>
+    </div>
+</div>

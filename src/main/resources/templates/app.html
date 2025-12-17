@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>Vaultly — App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+
+<body>
+    <!-- include header fragment -->
+    <div th:replace="fragments/header :: siteHeader"></div>
+
+    <main class="container app-wrap">
+        <div class="grid" style="grid-template-columns: 1fr 340px; gap:24px;">
+            <!-- Left: main card -->
+            <section class="card fade-up">
+                <h2 style="margin-top:0">Password Manager</h2>
+
+                <!-- form (POST to your /add) -->
+                <form th:action="@{/add}" method="post" class="form-row">
+                    <input class="input" name="website" placeholder="Website (eg. Netflix)" required>
+                    <input class="input" name="username" placeholder="Username" required>
+                    <input class="input" name="category" placeholder="Category (Social, Work, Finance)">
+                    <div style="display:flex;gap:10px">
+                        <input class="input" name="password" placeholder="Password" required>
+                        <button class="btn primary" type="submit">Add</button>
+                    </div>
+                </form>
+
+                <!-- entries list -->
+                <div class="entries" style="margin-top:18px;">
+                    <!-- iterate password entries -->
+                    <div th:each="e : ${entries}" class="entry">
+                        <div class="meta">
+                            <h5 th:text="${e.website}">Website</h5>
+                            <p>
+                                <span th:text="${e.username}">username</span>
+                                <span style="margin-left:8px;color:var(--muted);font-size:13px;"
+                                    th:text="${e.category}"></span>
+                            </p>
+                        </div>
+
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <!-- masked password -->
+                            <div style="padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.03)">
+                                <span th:text="${'******'}">******</span>
+                            </div>
+
+                            <!-- actions -->
+                            <div class="actions">
+                                <button class="btn copy-btn" type="button" th:attr="data-id=${e.id}">Copy</button>
+                                <button class="btn" type="button" th:attr="data-id=${e.id}"
+                                    onclick="openEdit(this)">Edit</button>
+                                <a class="btn" th:href="@{/delete/{id}(id=${e.id})}"
+                                    style="color:var(--danger)">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- if no entries -->
+                    <div th:if="${#lists.isEmpty(entries)}" class="card"
+                        style="margin-top:8px;text-align:center;color:var(--muted)">
+                        You don't have any entries yet — add your first password above.
+                    </div>
+                </div>
+
+
+                <!-- In your template iterate entries:
+                        <div th:each="e : ${entries}" class="entry"> ... </div>
+                    -->
+            </section>
+
+            <!-- Right: profile / stats box -->
+            <aside class="card fade-up" style="height:100%;">
+                <div class="profile-head">
+                    <img class="avatar" th:src="@{/images/avatar.png}" src="/images/avatar.png" alt="avatar">
+                    <div style="flex:1">
+                        <h3 style="margin:0">Hi, <span th:text="${username}">Dylan</span></h3>
+                        <p style="margin:6px 0 0;color:var(--muted)">Secure and fast. Total entries: <strong
+                                th:text="${count}">12</strong></p>
+                    </div>
+                </div>
+
+                <div style="margin-top:18px" class="stats">
+                    <div class="stat">
+                        <div style="font-size:18px;font-weight:700" class="entry-count" th:text="${entryCount}">0</div>
+                        <div style="color:var(--muted)">Total entries</div>
+                    </div>
+                    <div class="stat">
+                        <div style="font-size:18px;font-weight:700" class="category-count" th:text="${categoryCount}">0
+                        </div>
+                        <div style="color:var(--muted)">Categories</div>
+                    </div>
+                </div>
+
+                <hr style="margin:16px 0;border:none;border-top:1px solid rgba(0,0,0,0.04)">
+
+                <div>
+                    <a class="btn" th:href="@{/export}"
+                        style="width:100%;margin-bottom:8px;display:inline-flex;justify-content:center">Export CSV</a>
+                    <a class="btn ghost" th:href="@{/profile}"
+                        style="width:100%;display:inline-flex;justify-content:center">Account settings</a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- include footer -->
+    <div th:replace="fragments/footer :: siteFooter"></div>
+
+    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+</body>
+
+</html>

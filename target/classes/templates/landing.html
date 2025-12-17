@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vaultly — Secure Password Manager</title>
+
+    <!-- Google Fonts & icons -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+
+    <!-- Font Awesome for icons (optional) -->
+    <script src="https://kit.fontawesome.com/a2d9b6f6f2.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- include header -->
+    <div th:replace="fragments/header :: siteHeader"></div>
+
+
+    <main class="container hero">
+        <section class="hero-card fade-up hero-landing">
+            <div class="hero-inner">
+                <h1 class="hero-title">Vaultly — Secure passwords, effortless access</h1>
+                <p class="lead">Store all your credentials safely with Vaultly. Sign in to manage, copy, edit and export
+                    your passwords.</p>
+
+                <div class="hero-cta">
+                    <a class="btn primary" th:href="@{/login}">Sign in</a>
+                    <a class="btn ghost" th:href="@{/signup}">Create account</a>
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="blob b1"></div>
+                <div class="blob b2"></div>
+                <div class="blob b3"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- include footer -->
+    <div th:replace="fragments/footer :: siteFooter"></div>
+
+    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+</body>
+
+</html>

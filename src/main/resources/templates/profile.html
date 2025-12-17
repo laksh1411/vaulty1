@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>Vaultly — Profile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+
+    <!-- Chart.js CDN for small profile chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- include header fragment -->
+    <div th:replace="fragments/header :: siteHeader"></div>
+
+    <main class="container app-wrap">
+        <div class="card fade-up" style="padding-bottom:18px;">
+            <div class="profile-head">
+                <img class="avatar" th:src="@{/images/avatar.png}" src="/images/avatar.png" alt="Avatar">
+                <div style="flex:1">
+                    <h2 style="margin:0">Hi, <span th:text="${username}">User</span></h2>
+                    <p style="margin:6px 0 0;color:var(--muted)">Member since <strong
+                            th:text="${memberSince}">2024</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
+                <div style="flex:1;min-width:220px">
+                    <h4 style="margin-bottom:8px">Security</h4>
+                    <div class="card">
+                        <p style="margin:0 0 8px;color:var(--muted)">Change password, enable two-factor, sign out of
+                            other devices</p>
+                        <div th:if="${error}" style="margin-bottom:8px;color:var(--danger);font-weight:600"
+                            th:text="${error}"></div>
+                        <div th:if="${success}" style="margin-bottom:8px;color:var(--success);font-weight:600"
+                            th:text="${success}"></div>
+                        <form th:action="@{/profile/change-password}" method="post" style="display:grid;gap:8px">
+                            <input class="input" name="oldPassword" placeholder="Current password" type="password">
+                            <input class="input" name="newPassword" placeholder="New password" type="password">
+                            <div style="display:flex;gap:8px">
+                                <button class="btn primary" type="submit">Change</button>
+                                <button class="btn ghost" type="button"
+                                    onclick="showToast('2FA not implemented')">Enable 2FA</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div style="width:320px">
+                    <h4 style="margin-bottom:8px">Usage</h4>
+                    <div class="card" style="padding:14px;">
+                        <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+                            <div style="flex:1">
+                                <div style="font-size:18px;font-weight:700" class="entry-count" th:text="${entryCount}">
+                                    0</div>
+                                <div style="color:var(--muted)">Total entries</div>
+                            </div>
+                            <div style="width:120px;text-align:center">
+                                <div style="font-size:18px;font-weight:700" class="category-count"
+                                    th:text="${categoryCount}">0</div>
+                                <div style="color:var(--muted)">Categories</div>
+                            </div>
+                        </div>
+                        <canvas id="profileChart" width="300" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- include footer -->
+    <div th:replace="fragments/footer :: siteFooter"></div>
+
+    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+</body>
+
+</html>

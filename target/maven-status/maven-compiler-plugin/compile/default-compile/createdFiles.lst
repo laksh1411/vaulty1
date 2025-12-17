@@ -1,0 +1,15 @@
+com\example\passwordmanager\service\PasswordService.class
+com\example\passwordmanager\service\CustomUserDetailsService.class
+com\example\passwordmanager\config\EncryptionConfig.class
+com\example\passwordmanager\PasswordManagerApplication.class
+com\example\passwordmanager\model\PasswordEntry.class
+com\example\passwordmanager\repository\PasswordRepository.class
+com\example\App.class
+com\example\passwordmanager\controller\AuthController.class
+com\example\passwordmanager\repository\UserRepository.class
+com\example\passwordmanager\controller\PageController.class
+com\example\passwordmanager\config\SecurityConfig.class
+com\example\passwordmanager\model\User.class
+com\example\passwordmanager\service\EncryptionService.class
+com\example\passwordmanager\controller\PasswordController.class
+com\example\passwordmanager\controller\GlobalControllerAdvice.class
